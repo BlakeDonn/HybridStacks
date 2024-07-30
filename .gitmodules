@@ -4,3 +4,6 @@
 [submodule "frontend/web"]
 	path = frontend/web
 	url = git@github.com:BlakeDonn/trustystack-react-web.git
+[submodule "frontend/native"]
+	path = frontend/native
+	url = git@github.com:BlakeDonn/trustystack-react-native.git
