@@ -83,7 +83,7 @@ tmux has-session -t $SESSION 2>/dev/null
 
 if [ $? != 0 ]; then
     # Session doesn't exist; create it
-    tmux new-session -d -s $SESSION -c "$DOCKER_COMPOSE_DIR" -n 'DevSession'
+    tmux new-session -d -s $SESSION -c "$DOCKER_COMPOSE_DIR" -n 'DevSession'make
 
     # Get the main pane ID (the one that was just created)
     MAIN_PANE=$(tmux list-panes -t $SESSION:0 -F '#{pane_id}' | head -n1)
@@ -107,7 +107,9 @@ if [ $? != 0 ]; then
 
     # Start the database in the top-left pane
     tmux send-keys -t "$TOP_LEFT_PANE" "cd \"$DOCKER_COMPOSE_DIR\"" C-m
-    tmux send-keys -t "$TOP_LEFT_PANE" "docker-compose -f docker-compose.dev.yml up" C-m
+    tmux send-keys -t "$TOP_LEFT_PANE" "docker-compose -f docker-compose.dev.yml up -d" C-m
+    tmux send-keys -t "$TOP_LEFT_PANE" "clear" C-m
+    tmux send-keys -t "$TOP_LEFT_PANE" "docker-compose -f docker-compose.dev.yml logs -f" C-m
 
     # Run migrations and start the backend in the top-right pane
     tmux send-keys -t "$TOP_RIGHT_PANE" "cd \"$RUST_BACKEND_DIR\"" C-m
